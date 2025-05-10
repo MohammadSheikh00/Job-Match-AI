@@ -1,0 +1,49 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+      color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 27px; /* زيادة المسافة بين الأزرار */
+  }
+  
+  .Headernav-link,
+  .Headernav-button {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 24px; /* تكبير الحشوة داخل الزر */
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    margin: 0; /* تأكيد إزالة أي تباعد خارجي */
+  }
+  
+  .Headernav-link:hover,
+  .Headernav-button:hover {
+    background-color: #2a2f3d;
+    color: #61dafb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .Headernav-button {
+    background-color: transparent;
+    color: white;
+  }
+  

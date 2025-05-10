@@ -1,0 +1,23 @@
+/* === Root Layout Container === */
+.layout-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* === Right side: Header + Main Content === */
+  .layout-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  /* === Main Content Area === */
+  .layout-main {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    padding: 1rem;
+  }
+  

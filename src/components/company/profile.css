@@ -1,0 +1,154 @@
+/* الحاوية الرئيسية */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  /* محتوى الصفحة */
+  .profile-content {
+    background: linear-gradient(135deg, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+  
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 10px 10px 30px #bebebe, -10px -10px 30px #ffffff;
+    /* تقليل الوهج */
+    width: 100%;
+    max-width: 800px;
+    animation: fadeIn 1s ease-in-out;
+    color: #fffdfd;
+  }
+  
+  /* العنوان */
+  .profile-content h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 800;
+  }
+  
+  /* حاوية الصورة الشخصية */
+  .profile-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  
+  /* ضروري حتى يتموضع الزر بالنسبة للصورة فقط */
+  
+  
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: inset 4px 4px 6px #c8d0e7, inset -4px -4px 6px #ffffff;
+  }
+  
+  .upload-btn {
+    position: absolute;
+    bottom: 15%;
+    right: 42%;
+    transform: translate(50%, 50%);
+    /* يجعل الزر على حافة الصورة تمامًا */
+    background-color: #3b82f6;
+    color: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .upload-btn:hover {
+    background-color: #2563eb;
+  }
+  
+  .upload-input {
+    display: none;
+  }
+  
+  .image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  /* تنسيق الحقول */
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    /* إضافة المسافة بين الحقول */
+  }
+  
+  .form-group {
+    margin-bottom: 25px;
+    /* زيادة المسافة بين الحقول */
+    flex-basis: 48%;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    background: #e0e5ec;
+    box-shadow: inset 4px 4px 6px #bebebe, inset -4px -4px 6px #ffffff;
+    outline: none;
+  }
+  
+  /* تنسيق زر الحفظ وتغيير كلمة المرور */
+  .button-group {
+    text-align: center;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .save-btn {
+    background-color: #58595c;
+    color: white;
+  }
+  
+  .save-btn:hover {
+    background-color: #393a3b;
+  }
+  
+  .change-password-btn {
+    background-color: #71349d;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  .change-password-btn:hover {
+    background-color: #401056;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }

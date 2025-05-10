@@ -1,0 +1,49 @@
+/*sidebar background color */
+aside.bg-dark {
+    background-color: rgb(32, 58, 67) !important;
+  }
+  
+  .sidebar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1.5rem;
+  
+  }
+  
+  .sidebar-title .ai-text {
+    color: #7763d0;
+  
+  }
+  
+  /* الزر النشط */
+  .btn-active {
+    background: linear-gradient(to right, #4B5563, #9CA3AF);
+    /* رمادي تدريجي */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    /* تظليل داخلي خفيف */
+  }
+  
+  
+  /* الزر الغير نشط */
+  .btn-inactive {
+    background-color: transparent;
+    border: none;
+  
+  }
+  
+  /* الزر النشط (القسم المفتوح) - مع تظليل ثابت */
+  .nav-item button.active {
+    background-color: rgba(0, 123, 255, 0.2);
+    /* أزرق شفاف */
+    color: #fff;
+    font-weight: bold;
+    /* جعل النص عريض */
+    border-radius: 5px;
+    /* إضافة حواف دائرية للزر */
+  }
+  
+  /* التأثيرات العامة */
+  .btn {
+    transition: all 0.3s ease-in-out;
+  }

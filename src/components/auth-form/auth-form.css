@@ -1,0 +1,205 @@
+.auth-container {
+    position: absolute;
+    top: 160px;
+    right: 40px;
+    transform: none;
+    width: 100%;
+    max-width: 400px;
+    z-index: 1000;
+    animation: fadeSlideIn 1s ease forwards;
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+  
+  .auth-container.is-signup {
+    position: absolute;
+    top: 160px;
+    right: 40px;
+    margin: 0;
+  }
+  
+  /* عند اختيار Company ينزاح الفورم لفوق */
+  .auth-container.company-mode {
+    top: 85px; /* بدل 160px */
+    margin-top: 0;
+    overflow-y: visible; /* إلغاء السكرول */
+    max-height: none;
+  }
+  
+  /* عند ظهور رسالة، يصغر الفورم */
+  .auth-container.shrink {
+    transform: scale(0.90) !important;
+    transition: transform 0.3s ease !important;
+  }
+  
+  @keyframes fadeSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .auth-right {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    border-radius: 16px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.3s;
+  }
+  
+  .auth-right:hover {
+    box-shadow: 0 0 45px rgba(0, 0, 0, 0.5);
+  }
+  
+  .auth-right h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+    animation: pulseGlow 2.5s infinite;
+  }
+  
+  @keyframes pulseGlow {
+    0% {
+      text-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(249, 115, 22, 0.7);
+    }
+    100% {
+      text-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+    }
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 16px;
+    outline: none;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+  }
+  
+  .form-group input::placeholder {
+    color: #9ca3af;
+  }
+  
+  .form-group select {
+    appearance: none;
+    background: rgba(255, 255, 255, 0.15)
+      url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+    background-size: 16px;
+    padding-right: 35px;
+  }
+  
+  .forgot-password {
+    text-align: right;
+    margin-bottom: 15px;
+  }
+  
+  .forgot-link {
+    font-size: 13px;
+    color: #f97316;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .forgot-link:hover {
+    color: #fb923c;
+    text-decoration: underline;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #f97316, #fb923c);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 10px rgba(249, 115, 22, 0.2);
+  }
+  
+  .submit-btn:hover {
+    transform: scale(1.03);
+    background: linear-gradient(45deg, #fb923c, #f97316);
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+  }
+  
+  .toggle-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  .toggle-link {
+    color: #f97316;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 5px;
+    transition: color 0.3s;
+  }
+  
+  .toggle-link:hover {
+    color: #fb923c;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .auth-container {
+      right: 50%;
+      transform: translateX(50%);
+      padding: 20px;
+      top: 100px;
+    }
+  
+    .auth-container.is-signup {
+      right: 50%;
+      transform: translateX(50%);
+      top: 100px;
+    }
+  
+    .auth-container.company-mode {
+      top: 75px;
+    }
+  
+    .auth-right {
+      padding: 25px;
+    }
+  
+    .form-group input,
+    .form-group select {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .submit-btn {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  input::placeholder {
+    color: rgb(226, 220, 220) !important;
+  }
+  

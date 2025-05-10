@@ -1,0 +1,57 @@
+/* sidebar background color */
+aside.bg-dark {
+  background-color: #284E5D !important;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-title .gray-text {
+  color: #403475;
+}
+
+/* الزر النشط */
+.btn-active {
+  background: linear-gradient(to right, #4B5563, #9CA3AF);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3); /* ✅ تظليل خارجي مرئي */
+  color: #fff;
+  font-weight: bold;
+  border-radius: 6px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px;
+}
+
+/* الزر غير النشط */
+.btn-inactive {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px;
+  
+}
+
+/* الزر النشط أيضًا عند وجود كلاس .active */
+.nav-item button.active {
+  background-color: rgba(0, 123, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.4); /* ✅ تظليل خارجي قوي */
+  color: #fff;
+  font-weight: bold;
+  border-radius: 6px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px;
+
+}
+
+/* التأثيرات العامة */
+.btn {
+  transition: all 0.3s ease-in-out;
+  display: block;
+
+}

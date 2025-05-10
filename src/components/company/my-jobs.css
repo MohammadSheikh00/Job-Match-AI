@@ -1,0 +1,186 @@
+/* تنسيق الصفحة العامة */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* تنسيق العنوان */
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #343a40;
+  }
+  
+  /* تنسيق بطاقة الوظائف */
+  .job-card {
+    border-radius: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #343a40;
+  }
+  
+  .custom-button {
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+  
+  .btn-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+/* تنسيق نافذة التعديل (Modal) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* خلفية مظلمة مع شفافية أقل */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 12px; /* حواف منحنية أكثر لطفًا */
+    width: 320px; /* جعل الفورم أصغر */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* إضافة ظل ناعم */
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* تنسيق الحقول داخل الفورم */
+  .modal-content .form-group {
+    margin-bottom: 15px; /* تقليل المسافة بين الحقول */
+  }
+  
+  .modal-content input {
+    padding: 8px;
+    border-radius: 6px; /* حواف دائرية أكثر */
+    width: 100%;
+    border: 1px solid #ced4da;
+    font-size: 0.9rem; /* تقليل حجم الخط */
+  }
+  
+  .modal-content input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .modal-content h4 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.2rem; /* تقليل حجم العنوان */
+    color: #343a40;
+  }
+  
+  /* تنسيق الأزرار داخل نافذة التعديل */
+  .modal-content .btn {
+    width: 48%;
+    font-size: 0.9rem;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .modal-content .btn-secondary {
+    background-color: #6c757d;
+    border: 1px solid #6c757d;
+  }
+  
+  .modal-content .btn-success {
+    background-color: #28a745;
+    border: 1px solid #28a745;
+  }
+  
+  .modal-content .btn:hover {
+    opacity: 0.9;
+  }
+  
+  /* إضافة تأثير على الأزرار عند المرور عليها */
+  .modal-content .btn:active {
+    transform: scale(0.98); /* تأثير انكماش عند الضغط */
+  }
+  
+  /* تعديل المظهر عند التمرير فوق الأزرار */
+  .modal-content .btn-group {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  
+
+
+
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .modal-content {
+    background: #f0f0f0;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 9px 9px 16px #bebebe, -1px -1px 10px #ffffff;
+    min-width: 300px;
+    animation: scaleIn 0.3s ease;
+  }
+  
+  .neumorphic-confirm:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  
+  @keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+
+  
+
+
+
+
+  

@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(145deg, #dbeafe, #f0f4f8);
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .job-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    min-height: 100vh;
+    background-size: cover;
+  }
+  
+  .job-form {
+    background: linear-gradient(135deg, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+  
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 12px 12px 25px #babecc, -12px -12px 25px #ffffff;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .job-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .form-group {
+    position: relative;
+    /* display: flex; */
+    /* flex-direction: column; */
+  }
+  
+  .form-group.full {
+    grid-column: span 2;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 14px 16px 14px 45px;
+    border-radius: 20px;
+    border: none;
+    font-size: 15px;
+    background: #ffffff;
+    box-shadow: inset 6px 6px 10px #bebebe, inset -6px -6px 10px #ffffff;
+    transition: 0.3s;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    background: #f1f1f1;
+    box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+  
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+  }
+  
+  .error {
+    color: #e63946;
+    font-size: 13px;
+    margin-top: 6px;
+  }
+  
+  .submit-button {
+    margin-top: 30px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 25px;
+  
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: 0.3s;
+  }
+  
+  .submit-button:hover {
+    background: linear-gradient(135deg, rgb(32, 58, 67), rgb(44, 83, 100), rgb(15, 32, 39));
+  
+    color: #ffffff;
+  
+    cursor: pointer;
+  }

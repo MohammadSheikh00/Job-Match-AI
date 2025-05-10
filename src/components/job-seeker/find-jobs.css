@@ -1,0 +1,33 @@
+.find-jobs-container {
+    padding: 2rem;
+  }
+  
+  .category-selection,
+  .resume-upload {
+    margin-bottom: 1.5rem;
+  }
+  
+  .progress-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    margin: 20px 0;
+  }
+  
+  .missing-skills ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .missing-skills a {
+    color: #007bff;
+  }
+  
+  .job-listing .list-group-item {
+    margin-bottom: 1rem;
+  }
+  
