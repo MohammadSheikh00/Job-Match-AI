@@ -1,4 +1,5 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './auth-form.css';
 import clickSound from '../../assets/click.mp3';
 
@@ -16,6 +17,7 @@ const AuthForm = forwardRef((props, ref) => {
   const [newPassword, setNewPassword] = useState('');
 
   const audioRef = useRef(new Audio(clickSound));
+  const navigate = useNavigate();
 
   const playClick = () => {
     audioRef.current.currentTime = 0;
@@ -47,7 +49,7 @@ const AuthForm = forwardRef((props, ref) => {
     setLoading(true);
     setMessage('');
 
-    const endpoint = isSignUp ? '/auth/signUp' : '/auth/login';
+    const endpoint = isSignUp ? '/auth/signUp' : '/auth/signIn';
     const baseURL = 'https://jobmatch-8lum.onrender.com';
 
     const payload = isSignUp
@@ -75,17 +77,17 @@ const AuthForm = forwardRef((props, ref) => {
         setMessage(isSignUp ? 'Account created successfully!' : 'Logged in successfully!');
 
         if (!isSignUp) {
-          const userType = data.type;
+          const userType = data.user.type;
+          const storageKey = userType.toLowerCase() === 'company' ? 'companyData' : 'userData';
           localStorage.setItem('userType', userType);
-          localStorage.setItem(userType === 'company' ? 'companyData' : 'userData', JSON.stringify(data));
-        
-          if (userType === 'company') {
-            window.location.hash = '#/company'; // ✅ مهم جدًا وجود الـ /
-          } else if (userType === 'jobSeeker') {
-            window.location.hash = '#/job-seeker'; // ✅ مهم جدًا وجود الـ /
+          localStorage.setItem(storageKey, JSON.stringify(data));
+
+          if (userType.toLowerCase() === 'company') {
+            navigate('/company');
+          } else if (userType.toLowerCase() === 'jobseeker') {
+            navigate('/job-seeker');
           }
         }
-        
       }
     } catch (error) {
       setMessage('Network error or server is down.');
@@ -94,7 +96,6 @@ const AuthForm = forwardRef((props, ref) => {
     }
   };
 
-  // ✅ باقي الكود كما هو
   const handleForgotPassword = async () => {
     playClick();
     setLoading(true);

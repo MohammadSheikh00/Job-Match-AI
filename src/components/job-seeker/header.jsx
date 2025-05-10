@@ -1,7 +1,12 @@
 import React from 'react';
 
 const JobSeeker = () => {
-
+  const handleLogout = () => {
+    localStorage.removeItem('userType');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('companyData');
+    window.location.href = '/';
+  };
 
   return (
     <header
@@ -11,11 +16,9 @@ const JobSeeker = () => {
       }}
     >
       <h5 className="m-0 text-white">JobSeeker Dashboard</h5>
-      <button className="btn btn-outline-danger">Logout</button>
+      <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
     </header>
-
   );
 };
 
 export default JobSeeker;
-

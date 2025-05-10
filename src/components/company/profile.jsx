@@ -7,7 +7,7 @@ const CompanyProfile = () => {
   const companyName = "CompanyName.";
 
   const [formData, setFormData] = useState({
-    name: companyName,
+    companyName: companyName,
     email: '',
     phone: '',
     location: '',
@@ -37,13 +37,34 @@ const CompanyProfile = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Saved data:', formData);
-    alert('Profile updated!');
+    const token = JSON.parse(localStorage.getItem('userData'))?.token;
+
+    try {
+      const response = await fetch('https://jobmatch-8lum.onrender.com/company/updateProfile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('✅ Profile updated successfully!');
+      } else {
+        alert('❌ Failed to update profile: ' + data.message);
+      }
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      alert('❌ Error occurred. Check console.');
+    }
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = async (e) => {
     e.preventDefault();
 
     if (passwordData.newPassword !== passwordData.confirmPassword) {
@@ -51,15 +72,39 @@ const CompanyProfile = () => {
       return;
     }
 
-    console.log('Password changed to:', passwordData.newPassword);
-    alert('Password changed successfully!');
-    setPasswordData({
-      oldPassword: '',
-      newPassword: '',
-      confirmPassword: ''
-    });
-    setPasswordError('');
-    setShowPasswordForm(false);
+    const token = JSON.parse(localStorage.getItem('userData'))?.token;
+
+    try {
+      const response = await fetch('https://jobmatch-8lum.onrender.com/company/changePassword', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          oldPassword: passwordData.oldPassword,
+          newPassword: passwordData.newPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('✅ Password changed successfully!');
+        setPasswordData({
+          oldPassword: '',
+          newPassword: '',
+          confirmPassword: ''
+        });
+        setPasswordError('');
+        setShowPasswordForm(false);
+      } else {
+        setPasswordError('❌ ' + data.message);
+      }
+    } catch (err) {
+      console.error('Error changing password:', err);
+      setPasswordError('❌ Error occurred. Check console.');
+    }
   };
 
   const handlePasswordInputChange = (e) => {
@@ -90,8 +135,8 @@ const CompanyProfile = () => {
                 <label>Company Name:</label>
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="companyName"
+                  value={formData.companyName}
                   onChange={handleChange}
                 />
               </div>

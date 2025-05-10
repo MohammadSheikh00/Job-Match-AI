@@ -10,7 +10,7 @@ import {
 } from 'react-icons/fa';
 import clickSoundFile from '../../assets/click.mp3';
 
-const AddJob = ({ setPostedJobs, editingJob = null, editingIndex = null }) => {
+const AddJob = ({ editingJob = null }) => {
   const [job, setJob] = useState({
     title: '',
     description: '',
@@ -28,7 +28,8 @@ const AddJob = ({ setPostedJobs, editingJob = null, editingIndex = null }) => {
 
   const [errors, setErrors] = useState({});
   const clickSound = useRef(null);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setJob({ ...job, [e.target.name]: e.target.value });
@@ -48,34 +49,64 @@ const AddJob = ({ setPostedJobs, editingJob = null, editingIndex = null }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     clickSound.current.play();
 
-    if (validateForm()) {
-      setPostedJobs((prevJobs) => {
-        if (editingJob !== null && editingIndex !== null) {
-          const updatedJobs = [...prevJobs];
-          updatedJobs[editingIndex] = job;
-          setShowSuccessMessage('Job updated successfully!');
-          return updatedJobs;
-        } else {
-          setShowSuccessMessage('Job posted successfully!');
-          return [...prevJobs, job];
-        }
+    if (!validateForm()) return;
+
+    try {
+      setLoading(true);
+
+      const companyData = JSON.parse(localStorage.getItem('companyData'));
+      const token = companyData?.token;
+
+      if (!token) {
+        setShowSuccessMessage('❌ Missing auth token. Please log in.');
+        setLoading(false);
+        return;
+      }
+
+      const jobData = {
+        title: job.title,
+        description: job.description,
+        skills: job.skills,
+        location: job.location,
+        deadline: job.applicationdeadline,
+        numberOfPositions: job.numberofpositions,
+      };
+
+      const response = await fetch('https://jobmatch-8lum.onrender.com/company/addJob', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(jobData),
       });
 
-      setJob({
-        title: '',
-        description: '',
-        skills: '',
-        location: '',
-        applicationdeadline: '',
-        numberofpositions: '',
-      });
-      setErrors({});
+      const data = await response.json();
 
-      setTimeout(() => setShowSuccessMessage(false), 3000); // Hide message after 3s
+      if (response.ok) {
+        setShowSuccessMessage('✅ Job posted successfully!');
+        setJob({
+          title: '',
+          description: '',
+          skills: '',
+          location: '',
+          applicationdeadline: '',
+          numberofpositions: '',
+        });
+        setErrors({});
+      } else {
+        setShowSuccessMessage(`❌ Error: ${data.message || data.error || 'Something went wrong'}`);
+      }
+    } catch (error) {
+      setShowSuccessMessage('❌ Failed to connect to the server');
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setShowSuccessMessage(''), 3000);
     }
   };
 
@@ -106,7 +137,7 @@ const AddJob = ({ setPostedJobs, editingJob = null, editingIndex = null }) => {
               <input
                 type="text"
                 name="skills"
-                placeholder="Required Skills"
+                placeholder="Required Skills (comma-separated)"
                 value={job.skills}
                 onChange={handleChange}
               />
@@ -165,8 +196,8 @@ const AddJob = ({ setPostedJobs, editingJob = null, editingIndex = null }) => {
             </div>
           </div>
 
-          <button type="submit" className="submit-button">
-            {editingJob ? 'Update Job' : 'Submit Job'}
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? 'Sending...' : editingJob ? 'Update Job' : 'Submit Job'}
           </button>
         </form>
       </div>

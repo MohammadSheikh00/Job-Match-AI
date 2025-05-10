@@ -9,8 +9,9 @@ import {
 
 import Root from "./layouts/root/root";
 import Home from "./pages/home/home.jsx";
-import JobSeekerDashboard from "./pages/job-seeker/job-seeker.jsx"; // ✅ تعديل الاسم هنا
+import JobSeekerDashboard from "./pages/job-seeker/job-seeker.jsx";
 import CompanyDashboard from "./pages/company/company.jsx";
+import ProtectedRoute from "./components/shared/ProtectedRoute"; // ✅ حماية المسارات
 
 const router = createHashRouter([
   {
@@ -18,8 +19,22 @@ const router = createHashRouter([
     element: <Root />,
     children: [
       { index: true, element: <Home /> },
-      { path: "job-seeker", element: <JobSeekerDashboard /> }, // ✅ تعديل الاسم هنا
-      { path: "company", element: <CompanyDashboard /> },
+      {
+        path: "job-seeker",
+        element: (
+          <ProtectedRoute allowedRole="jobSeeker">
+            <JobSeekerDashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "company",
+        element: (
+          <ProtectedRoute allowedRole="company">
+            <CompanyDashboard />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);

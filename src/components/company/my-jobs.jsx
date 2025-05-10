@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './my-jobs.css';
 
-const dummyCandidates = [
-  {
-    id: 1,
-    name: 'Ali Hasan',
-    match: '92%',
-    email: 'ali.hasan@example.com',
-    phone: '0799999999',
-    experience: '3 years',
-    skills: 'React, Node.js, MongoDB',
-  },
-  {
-    id: 2,
-    name: 'Sara Khalid',
-    match: '88%',
-    email: 'sara.k@example.com',
-    phone: '0788888888',
-    experience: '2 years',
-    skills: 'Vue.js, Laravel, MySQL',
-  },
-];
-
-const MyJobs = ({ jobs, setJobs, onDeleteJob }) => {
+const MyJobs = () => {
+  const [jobs, setJobs] = useState([]);
   const [editingJob, setEditingJob] = useState(null);
   const [editedJob, setEditedJob] = useState({});
-  const [jobToDeleteIndex, setJobToDeleteIndex] = useState(null);
+  const [jobToDeleteId, setJobToDeleteId] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [showCandidatesForIndex, setShowCandidatesForIndex] = useState(null);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const token = JSON.parse(localStorage.getItem('userData'))?.token;
+
+  const fetchJobs = async () => {
+    try {
+      const response = await fetch('https://jobmatch-8lum.onrender.com/company/jobs', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setJobs(data.jobs || []);
+      } else {
+        console.error('Failed to fetch jobs:', data.message);
+      }
+    } catch (err) {
+      console.error('Error fetching jobs:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
   const handleEditJob = (job, index) => {
     setEditingJob(index);
@@ -40,12 +45,48 @@ const MyJobs = ({ jobs, setJobs, onDeleteJob }) => {
     setEditedJob((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSaveEdit = () => {
-    const updatedJobs = jobs.map((job, index) =>
-      index === editingJob ? editedJob : job
-    );
-    setJobs(updatedJobs);
-    setEditingJob(null);
+  const handleSaveEdit = async () => {
+    try {
+      const response = await fetch(`https://jobmatch-8lum.onrender.com/company/updateJob/${editedJob._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(editedJob),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setEditingJob(null);
+        fetchJobs();
+      } else {
+        alert('Error updating job: ' + data.message);
+      }
+    } catch (err) {
+      console.error('Error updating job:', err);
+    }
+  };
+
+  const handleDeleteJob = async () => {
+    try {
+      const response = await fetch(`https://jobmatch-8lum.onrender.com/company/deleteJob/${jobToDeleteId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        setJobToDeleteId(null);
+        fetchJobs();
+      } else {
+        console.error('Error deleting job');
+      }
+    } catch (err) {
+      console.error('Error deleting job:', err);
+    }
   };
 
   const toggleView = (index) => {
@@ -61,7 +102,7 @@ const MyJobs = ({ jobs, setJobs, onDeleteJob }) => {
       {Array.isArray(jobs) && jobs.length > 0 ? (
         <div className="row">
           {jobs.map((job, index) => (
-            <div key={index} className="col-md-6 mb-4">
+            <div key={job._id} className="col-md-6 mb-4">
               <div className="job-card shadow-sm rounded bg-white position-relative custom-card">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <h5 className="fw-bold text-dark job-title">{job.title}</h5>
@@ -80,64 +121,20 @@ const MyJobs = ({ jobs, setJobs, onDeleteJob }) => {
                     </button>
                     <button
                       className="btn btn-sm btn-outline-danger custom-button"
-                      onClick={() => setJobToDeleteIndex(index)}
+                      onClick={() => setJobToDeleteId(job._id)}
                     >
                       🗑 Delete
                     </button>
                   </div>
                 </div>
 
-                {/* 👇 تفاصيل الوظيفة عند الضغط على View */}
                 {expandedIndex === index && (
                   <>
-                    <p className="mb-1"><strong>📝 Description:</strong> {job.description}</p>
-                    <p className="mb-1"><strong>📍 Location:</strong> {job.location}</p>
-                    <p className="mb-1"><strong>📅 Deadline:</strong> {job.applicationdeadline}</p>
-                    <p className="mb-1"><strong>🛠 Skills:</strong> {job.skills}</p>
-                    <p className="mb-2"><strong>👥 Positions:</strong> {job.numberofpositions}</p>
-
-                    <button
-                      className="btn btn-outline-secondary btn-sm mb-2"
-                      onClick={() =>
-                        setShowCandidatesForIndex(
-                          showCandidatesForIndex === index ? null : index
-                        )
-                      }
-                    >
-                      {showCandidatesForIndex === index ? 'Hide Candidates' : 'Show Candidates'}
-                    </button>
-
-                    {/* 👇 المرشحين */}
-                    {showCandidatesForIndex === index && (
-                      <div className="candidates-list">
-                        <ul className="list-group">
-                          {dummyCandidates.map((candidate) => (
-                            <li
-                              key={candidate.id}
-                              className="list-group-item d-flex justify-content-between align-items-center"
-                              onClick={() => setSelectedCandidate(candidate)}
-                              style={{ cursor: 'pointer' }}
-                            >
-                              {candidate.name}
-                              <span className="badge bg-primary rounded-pill">
-                                {candidate.match}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        {/* 👇 معلومات المرشح المختار */}
-                        {selectedCandidate && (
-                          <div className="mt-3 border p-2 rounded bg-light">
-                            <h6 className="text-primary">{selectedCandidate.name}</h6>
-                            <p><strong>Email:</strong> {selectedCandidate.email}</p>
-                            <p><strong>Phone:</strong> {selectedCandidate.phone}</p>
-                            <p><strong>Experience:</strong> {selectedCandidate.experience}</p>
-                            <p><strong>Skills:</strong> {selectedCandidate.skills}</p>
-                          </div>
-                        )}
-                      </div>
-                    )}
+                    <p><strong>📝 Description:</strong> {job.description}</p>
+                    <p><strong>📍 Location:</strong> {job.location}</p>
+                    <p><strong>📅 Deadline:</strong> {job.applicationdeadline}</p>
+                    <p><strong>🛠 Skills:</strong> {job.skills}</p>
+                    <p><strong>👥 Positions:</strong> {job.numberofpositions}</p>
                   </>
                 )}
               </div>
@@ -145,109 +142,79 @@ const MyJobs = ({ jobs, setJobs, onDeleteJob }) => {
           ))}
         </div>
       ) : (
-        <p>No jobs posted yet.</p>
+        <p>🔄 Loading or no jobs posted yet.</p>
       )}
 
-      {/* نافذة التعديل */}
+      {/* Modal for editing */}
       {editingJob !== null && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h4>Edit Job</h4>
             <div className="form-group mb-3">
-              <label htmlFor="title">Job Title</label>
+              <label>Job Title</label>
               <input
                 type="text"
-                id="title"
                 name="title"
                 value={editedJob.title}
                 onChange={handleChange}
                 className="form-control"
               />
             </div>
-
             <div className="form-group mb-3">
-              <label htmlFor="description">Description</label>
+              <label>Description</label>
               <textarea
-                id="description"
                 name="description"
                 value={editedJob.description}
                 onChange={handleChange}
                 className="form-control"
               />
             </div>
-
             <div className="form-group mb-3">
-              <label htmlFor="location">Location</label>
+              <label>Location</label>
               <input
                 type="text"
-                id="location"
                 name="location"
                 value={editedJob.location}
                 onChange={handleChange}
                 className="form-control"
               />
             </div>
-
             <div className="form-group mb-3">
-              <label htmlFor="skills">Skills</label>
+              <label>Skills</label>
               <input
                 type="text"
-                id="skills"
                 name="skills"
                 value={editedJob.skills}
                 onChange={handleChange}
                 className="form-control"
               />
             </div>
-
             <div className="form-group mb-3">
-              <label htmlFor="numberofpositions">Number of Positions</label>
+              <label>Number of Positions</label>
               <input
                 type="number"
-                id="numberofpositions"
                 name="numberofpositions"
                 value={editedJob.numberofpositions}
                 onChange={handleChange}
                 className="form-control"
               />
             </div>
-
             <div className="form-group">
-              <button className="btn btn-success" onClick={handleSaveEdit}>
-                Save Changes
-              </button>
-              <button
-                className="btn btn-secondary ms-2"
-                onClick={() => setEditingJob(null)}
-              >
-                Cancel
-              </button>
+              <button className="btn btn-success" onClick={handleSaveEdit}>Save Changes</button>
+              <button className="btn btn-secondary ms-2" onClick={() => setEditingJob(null)}>Cancel</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* نافذة تأكيد الحذف */}
-      {jobToDeleteIndex !== null && (
+      {/* Modal for delete confirm */}
+      {jobToDeleteId && (
         <div className="modal-overlay">
           <div className="modal-content neumorphic-confirm">
             <h5 className="mb-3 text-center">Are you sure you want to delete this job?</h5>
             <div className="d-flex justify-content-center">
-              <button
-                className="btn btn-danger me-3"
-                onClick={() => {
-                  onDeleteJob(jobToDeleteIndex);
-                  setJobToDeleteIndex(null);
-                }}
-              >
-                Yes, Delete
-              </button>
-              <button
-                className="btn btn-secondary"
-                onClick={() => setJobToDeleteIndex(null)}
-              >
-                Cancel
-              </button>
+              <button className="btn btn-danger me-3" onClick={handleDeleteJob}>Yes, Delete</button>
+              <button className="btn btn-secondary" onClick={() => setJobToDeleteId(null)}>Cancel</button>
             </div>
           </div>
         </div>
